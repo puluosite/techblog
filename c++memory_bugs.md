@@ -1,7 +1,7 @@
 # Common Memory Errors
-1. [Check Any Compilation Warnings](#Check Any Compilation Warnings)
-2. [Design Copy Constructor When Destructor Free Items](#Design Copy Constructor When Destructor Free Items)
-3. [Always Check Asumption Using *Assert](#Always Check Asumption Using *Assert)
+1. [Check Any Compilation Warnings](#Check-Any-Compilation-Warnings)
+2. [Design Copy Constructor When Destructor Free Items](#Design-Copy-Constructor-When-Destructor-Free-Items)
+3. [Always Check Asumption Using *Assert](#Always-Check-Asumption-Using-*Assert)
 
 
 ## Check Any Compilation Warnings
