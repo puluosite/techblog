@@ -5,18 +5,52 @@ Compile the program with -g and -o0/-o1
 
 valgrind --leak-check=yes --log-file=my.log exe (~20x on your programe)
 
-- check for invalid read/write; read after write
-- check for key word error
-- check for definite lost
+Check for the following keywords:
+
+- **invalid** (write/read/free)
+- **error**
+- **definite lost**
+- **uninitialised value**
 
 
 ## ASAN
 ASAN in GCC/CLANG
 
 
-# Common memory errors
+# Common Memory Errors
 
-## always check asumption
+## Check Any Compilation Warnings
+
+Compiler will also show the uninitialized local variables.
+**HOWEVER, compiler doesn't show unintialized class members**
+
+- always make sure constructors init all members
+
+## Design Copy Constructor When Destructor Free Items
+
+Check following code:
+
+```c++
+class A {
+	A() { _iptr = new int(0);}
+	~A() { delete _iptr; }
+	int* _iptr;
+};
+
+vector<A> vec_A;
+for (size_t i = 0; i < 100; ++i) {
+	vec_A.push_back(A());
+}
+```
+
+Then we will have a bad memory issue. During insertion, `vec_A` will resize, and copy constructor will called to move existing elements in vec. Then some As' ~_iptr~ are **already freed**!!!!
+
+Need to add copy constructor:
+```c++
+A(const A& a) { _iptr = new int(*(a._iptr); }
+```
+
+## Always Check Asumption Using *Assert*
 
 Do you see problem in the following code? 
 ```c++
@@ -32,4 +66,3 @@ You thought res1 and res2 are in pairs. However, someday some one change `get_re
 
 ```c++
 assert(res1.size() == res2.size());
-```
