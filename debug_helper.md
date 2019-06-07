@@ -2,7 +2,7 @@
 1. [Templates](#temp)
 
 ## <a name="temp"/>C++ Templates
-1. Instantiate template class methods that are not used in the code
+1. Instantiate template class methods that are not used in the code, *all the following code are written in CXX files*.
 
     1. all members of the template class
     ```c++
