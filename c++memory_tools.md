@@ -22,7 +22,7 @@ Check for the following keywords:
 Massif will track the memory usage in a graph
 - valgrind --tool=massif exe
 - --time-unit=B to track by time elapse
-- # # is the peak memory snapshot
+- &#35 is the peak memory snapshot
 - @ is the detailed memory usage, will show in the log file
 
 ## ASAN
