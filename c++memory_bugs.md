@@ -2,6 +2,35 @@
 1. [Check Any Compilation Warnings](#Check-Any-Compilation-Warnings)
 2. [Design Copy Constructor When Destructor Free Items](#Design-Copy-Constructor-When-Destructor-Free-Items)
 3. [Always Check Asumption Using *Assert](#Always-Check-Asumption-Using-*Assert)
+4. [Debug the Stack Overflow that will cause Random Function Call](#stackoverflow)
+
+## <a name="stackoverflow"/>Stack Overflow Causing Function Call Randomly
+Check the following code:
+
+```c++
+void g()
+{
+    printf("now inside g()!\n");
+}
+
+void f()
+{   
+    void *x[1];
+    printf("now inside f()!\n");
+    // can only modify this section
+    // cant call g(), maybe use g (pointer to function)
+    x[-1]=&g;
+}
+
+int main (int argc, char *argv[])
+{
+    f();
+    return 0;
+}
+```
+`g()` is actually triggered, because the ebp+4 is the function return pointer. If stack is overflowed and change that address, program will no longer return to the previous call point. Check this: https://www.tenouk.com/Bufferoverflowc/Bufferoverflow4.html which explains very well. 
+
+In the gdb, we can do: disass func_name to print the assemble code of the function
 
 
 ## Check Any Compilation Warnings
