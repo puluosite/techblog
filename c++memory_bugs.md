@@ -30,7 +30,9 @@ int main (int argc, char *argv[])
 ```
 `g()` is actually triggered, because the ebp+4 is the function return pointer. If stack is overflowed and change that address, program will no longer return to the previous call point. Check this: https://www.tenouk.com/Bufferoverflowc/Bufferoverflow4.html which explains very well. 
 
-In the gdb, we can do: disass func_name to print the assemble code of the function
+In the gdb, we can do: disass func_name to print the assemble code of the function.
+
+So in compiler, always add: **-fstack-protector -fstack-protector-all** 
 
 
 ## Check Any Compilation Warnings
