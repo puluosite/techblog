@@ -7,6 +7,7 @@
     1. all members of the template class
     ```c++
       template class TempClass<P1, P2, P3>;
+      template class std::vector<P1>;
     ```
   
     2. specific members
