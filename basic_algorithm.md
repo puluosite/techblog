@@ -17,7 +17,7 @@ size_t my_binary_search(const vector<int>& vec, int elem)
     size_t r = vec.size();
     
     while (l < r) {
-        size_t m = l + (r-l)/2;
+        size_t m = l + (r-l)/2; // shouldn't write (l+r)/2 because l+r can overflow!!!!
         if (greater_or_equal_than(vec[m], elem)) // g(m) is true
             r = m;
         else
