@@ -3,6 +3,7 @@
 2. [Design Copy Constructor When Destructor Free Items](#Design-Copy-Constructor-When-Destructor-Free-Items)
 3. [Always Check Asumption Using *Assert](#Always-Check-Asumption-Using-*Assert)
 4. [Debug the Stack Overflow that will cause Random Function Call](#stackoverflow)
+5. [Compiler Flags](#compiler-flags)
 
 ## <a name="stackoverflow"/>Stack Overflow Causing Function Call Randomly
 Check the following code:
@@ -83,3 +84,24 @@ You thought res1 and res2 are in pairs. However, someday some one change `get_re
 ```c++
 assert(res1.size() == res2.size());
 ```
+## Compiler Flags
+
+Do you see problem in the following code? 
+```c++
+class D : B {
+  public:
+    D() : _a(0) {}
+    ~D() {}
+    virtual void print() {...} // class B has a virtual function call print
+  private:
+    int _a;
+    int _b;
+}
+```
+Two issues: 1. `_b` is not ininitialized, and there is virtual function but destructor is non-virtual. In GCC, even you have `-Wall`, it doesn't show any warning. Have to have the following:
+```make
+CFLAGS=-c -Wall -Weffc++ -g -std=c++1y
+INCLUDEDIRS = -isystem$(BOOST_INC)
+```
+
+`Weffc++` will show the above 2 warnings. The `isystem` will suppress warning from the appended libs. 
