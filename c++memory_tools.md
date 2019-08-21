@@ -1,7 +1,8 @@
 # Memory Debug Tools
 1. [valgrind](#valgrind)
 2. [massif](#massif)
-2. [ASAN](#ASAN)
+3. [ASAN](#ASAN)
+4. [GDB](#GDB)
 
 
 ## [valgrind](http://www.valgrind.org/docs/manual/quick-start.html)
@@ -27,3 +28,19 @@ Massif will track the memory usage in a graph
 
 ## ASAN
 ASAN in GCC/CLANG
+
+## GDB
+Search for: "Become a GDB Power User" Very awesome topics on using GDB.
+```make
+b main
+b _exit
+command 1 // which will let you program what to do when hit breakpoint main
+> record
+> continue
+> end
+command 2 // thing to do when hit end
+> run
+> end
+
+
+```
