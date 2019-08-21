@@ -41,6 +41,13 @@ command 1 // which will let you program what to do when hit breakpoint main
 command 2 // thing to do when hit end
 > run
 > end
-
+```
+For multiprocessing debugging:
+```make
+#must be set in the beginning before start
+ set detach-on-fork off
+ set follow-fork-mode child
+ info inferiors
+ inferior N
 
 ```
