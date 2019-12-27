@@ -4,6 +4,7 @@
 3. [ASAN](#ASAN)
 4. [GDB](#GDB)
 5. [MALLOC_CHECK_](#MALLOC_CHECK_)
+5. [MALLOC_PERTUBE_](#MALLOC_PERTUBE_)
 
 
 ## [valgrind](http://www.valgrind.org/docs/manual/quick-start.html)
@@ -74,3 +75,49 @@ void test_use_after_free()
 ```
 
 In the normal case, the tool won't crash. However, when you setenv MALLOC_CHECK_ 3 it will do some memory check, and if there is error, it will crash. (https://support.microfocus.com/kb/doc.php?id=3113982#). It can help detect the issue quickly.
+
+## MALLOC_PERTUBE_
+
+setenv MACLLOCK_PERTUBE_ xxx (1-255) will set memory to that specific number after free/delete
+assume you have a double frease:
+```c++
+class BadMemCls
+{
+  public:
+    BadMemCls() : _it(10) {}
+    void print() { cout << "BadMemCls has integer of: " << _it << _i1 << _i2 << _i3 << endl; }
+    unsigned _it;
+    unsigned _i1 = 20;
+    unsigned _i2 = 30;
+    unsigned _i3 = 40;
+
+};
+
+void test_use_after_free()
+{
+    auto* iptr1 = new BadMemCls();
+    delete iptr1;
+    iptr1 = NULL;
+}
+```
+
+After delete, `_it2` and `_it3` will be, when MALLOC_PERTUBE_ is 255
+
+```make
+(gdb) p/t *0x624c48
+$36 = 11111111111111111111111111111111
+(gdb) p/t *0x624c4C
+$37 = 11111111111111111111111111111111
+```
+and when MALLOC_PERTUBE_ 3, will be
+```make
+(gdb) p/t *0x624c48
+$12 = 11000000110000001100000011
+(gdb) p/t *0x624c4C
+$13 = 11000000110000001100000011
+```
+
+Somehow, the first and second unsigned are 0. Don't know why they are not set.
+
+To conclude, if we set this ENV, and we see a crash, whose memory is like `FFFF` or `3333`, then we know it's already freed. Anther point is that we have to turn off our own memory management. The behavior only triggers when system free is called.
+
