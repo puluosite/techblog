@@ -3,6 +3,7 @@
 2. [massif](#massif)
 3. [ASAN](#ASAN)
 4. [GDB](#GDB)
+5. [MALLOC_CHECK_](#MALLOC_CHECK_)
 
 
 ## [valgrind](http://www.valgrind.org/docs/manual/quick-start.html)
@@ -37,18 +38,39 @@ b main
 b _exit
 command 1 // which will let you program what to do when hit breakpoint main
 > record
-> continue
-> end
-command 2 // thing to do when hit end
-> run
-> end
 ```
-For multiprocessing debugging:
-```make
-#must be set in the beginning before start
- set detach-on-fork off
- set follow-fork-mode child
- info inferiors
- inferior N
 
+## MALLOC_CHECK_
+assume you have a double frease:
+```c++
+class BadMemCls
+{
+  public:
+    BadMemCls() : _it(10) {}
+    void print() { cout << "BadMemCls has integer of: " << _it << _i1 << _i2 << _i3 << endl; }
+    int _it;
+    int _i1 = 20;
+    int _i2 = 30;
+    int _i3 = 40;
+
+};
+
+void test_use_after_free()
+{
+    auto* iptr1 = new BadMemCls();
+    cout << "class hasn't been freed.\n";
+    iptr1->print();
+
+    auto* iptr2 = iptr1;
+    delete iptr1;
+    iptr1 = NULL;
+
+    cout << "class has been freed.\n";
+    iptr2->print();
+
+    cout << "class now being double freed.\n";
+    delete iptr2;
+}
 ```
+
+In the normal case, the tool won't crash. However, when you setenv MALLOC_CHECK_ 3 it will do some memory check, and if there is error, it will crash. (https://support.microfocus.com/kb/doc.php?id=3113982#). It can help detect the issue quickly.
