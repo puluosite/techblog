@@ -4,7 +4,7 @@
 3. [ASAN](#ASAN)
 4. [GDB](#GDB)
 5. [MALLOC_CHECK_](#MALLOC_CHECK_)
-5. [MALLOC_PERTUBE_](#MALLOC_PERTUBE_)
+5. [MALLOC_PERTURB_](#MALLOC_PERTURB_)
 
 
 ## [valgrind](http://www.valgrind.org/docs/manual/quick-start.html)
@@ -76,9 +76,9 @@ void test_use_after_free()
 
 In the normal case, the tool won't crash. However, when you setenv MALLOC_CHECK_ 3 it will do some memory check, and if there is error, it will crash. (https://support.microfocus.com/kb/doc.php?id=3113982#). It can help detect the issue quickly.
 
-## MALLOC_PERTUBE_
+## MALLOC_PERTURB_
 
-setenv MACLLOCK_PERTUBE_ xxx (1-255) will set memory to that specific number after free/delete
+setenv MACLLOCK_PERTURB_ xxx (1-255) will set memory to that specific number after free/delete
 assume you have a double frease:
 ```c++
 class BadMemCls
@@ -101,7 +101,7 @@ void test_use_after_free()
 }
 ```
 
-After delete, `_it2` and `_it3` will be, when MALLOC_PERTUBE_ is 255
+After delete, `_it2` and `_it3` will be, when MALLOC_PERTURB_ is 255
 
 ```make
 (gdb) p/t *0x624c48
@@ -109,7 +109,7 @@ $36 = 11111111111111111111111111111111
 (gdb) p/t *0x624c4C
 $37 = 11111111111111111111111111111111
 ```
-and when MALLOC_PERTUBE_ 3, will be
+and when MALLOC_PERTURB_ 3, will be
 ```make
 (gdb) p/t *0x624c48
 $12 = 11000000110000001100000011
