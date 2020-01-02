@@ -4,7 +4,8 @@
 3. [ASAN](#ASAN)
 4. [GDB](#GDB)
 5. [MALLOC_CHECK_](#MALLOC_CHECK_)
-5. [MALLOC_PERTURB_](#MALLOC_PERTURB_)
+6. [MALLOC_PERTURB_](#MALLOC_PERTURB_)
+7. [mprotect](#mprotect_)
 
 
 ## [valgrind](http://www.valgrind.org/docs/manual/quick-start.html)
@@ -120,4 +121,40 @@ $13 = 11000000110000001100000011
 Somehow, the first and second unsigned are 0. Don't know why they are not set.
 
 To conclude, if we set this ENV, and we see a crash, whose memory is like `FFFF` or `3333`, then we know it's already freed. Anther point is that we have to turn off our own memory management. The behavior only triggers when system free is called.
+
+## mprotect_
+C has a system API mprotect to set the memory as read_only. 
+```c
+void segv_handler (int signal_number) 
+{
+    uti_printf("bad memory accessed!\n");
+} 
+
+int test_mprotect()
+{
+    static long PAGE_SIZE = sysconf(_SC_PAGESIZE);
+
+    struct sigaction sa;
+
+    /* Install segv_handler as the handler for SIGSEGV. */
+    memset (&sa, 0, sizeof (sa));
+    sa.sa_handler = &segv_handler;
+    sigaction (SIGSEGV, &sa, NULL);
+
+
+    char* p = (char*)malloc(1024+PAGE_SIZE-1);
+    char* p_align = (char *)(((size_t) p + PAGE_SIZE-1) & ~(PAGE_SIZE-1));
+    if (mprotect(p_align, PAGE_SIZE, PROT_READ)) {
+        perror("Couldn't mprotect");
+        exit(errno);
+    }
+
+    char c = p[2000];         /* Read; ok */
+    p[2000] = 42;        /* Write; program dies on SIGSEGV */
+    return;
+}
+```
+In some cases, if we want to check the who touches memory accidentally, we can use this. For more info: https://linux.die.net/man/2/mprotect ; https://www.tutorialspoint.com/unix_system_calls/mprotect.htm
+
+
 
