@@ -1,6 +1,7 @@
 # Techniques To Make Debugging Easier
 1. [Templates](#temp)
 2. [GDB functions](#gdb_function)
+3. [GDB address](#gdb_address)
 
 ## <a name="temp"/>C++ Templates
 1. Instantiate template class methods that are not used in the code, *all the following code are written in CXX files*.
@@ -43,3 +44,15 @@ end
 ```
 GDB has its own set of programming commands, please check:
 https://sourceware.org/gdb/onlinedocs/gdb/Command-Files.html
+
+## <a name="gdb_address"/>GDB address
+https://sourceware.org/gdb/onlinedocs/gdb/Symbols.html
+1. We can print the function address in GDB by
+    ```makefile
+      info address func_foo
+    ```
+2. To print function or line number from address, we can do:
+    ```makefile
+    info symbol 0x871657a
+    list *0x871657a
+    ```
