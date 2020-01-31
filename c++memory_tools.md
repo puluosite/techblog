@@ -42,7 +42,7 @@ b _exit
 command 1 // which will let you program what to do when hit breakpoint main
 > record
 ```
-### gdb_catch_exception
+### gdb_catch_exception (http://www.yolinux.com/TUTORIALS/GDB-Commands.html)
 ```make
 catch throw 
 catch catch 
