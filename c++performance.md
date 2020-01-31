@@ -1,4 +1,7 @@
-http://www.brendangregg.com/perf.html#FlameGraphs
+# Performance Profiling Tools
+1. [perf](#perf)
+
+## [perf](http://www.brendangregg.com/perf.html#FlameGraphs)
 we can use perf to attach to a running program and profile the performance
 ```makefile
 perf record -m 64 -g fp -F 599 -p pid_foo
@@ -25,7 +28,8 @@ perf report -g
 
 And to be fancier, it can show a flamegraph: https://github.com/brendangregg/FlameGraph.
 ```makefie
-  [-i <path/to/your/perf.data> -o </path/to/your/output.svg> -f <filter_expression> -h]
+  stackcollapse-perf.pl out.perf > out.folded
+  flamegraph.pl out.kern_folded > kernel.svg
 ```
 We can also show program performance in real time:
 
