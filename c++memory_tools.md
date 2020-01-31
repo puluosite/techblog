@@ -33,6 +33,7 @@ Massif will track the memory usage in a graph
 ASAN in GCC/CLANG
 
 ## GDB
+### GDB_do_more_at_breakpoint
 Search for: "Become a GDB Power User" Very awesome topics on using GDB.
 (https://github.com/CppCon/CppCon2016/blob/master/Tutorials/GDB%20-%20a%20lot%20more%20than%20you%20realized/GDB%20-%20a%20lot%20more%20than%20you%20realized%20-%20Greg%20Law%20-%20CppCon%202016.pdf)
 ```make
@@ -40,6 +41,11 @@ b main
 b _exit
 command 1 // which will let you program what to do when hit breakpoint main
 > record
+```
+### gdb_catch_exception
+```make
+catch throw 
+catch catch 
 ```
 
 ## MALLOC_CHECK_
