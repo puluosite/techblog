@@ -2,7 +2,11 @@
 1. [perf](#perf)
 
 ## [perf](http://www.brendangregg.com/perf.html#FlameGraphs)
-we can use perf to attach to a running program and profile the performance
+We can use perf to attach to a running program and profile the performance. Firstly, the program needs to be compiled with `-g`. Note we can run both debug and release build with perf. Secondly, make sure the perf is using the correct shared library, otherwise, symbols cannot be read correctly. 
+```
+ldd perf to check libelf.so
+setenv LD_PRELOAD /usr/lib64/libelf.so.1
+```
 ```makefile
 perf record -m 64 -g fp -F 599 -p pid_foo
 
