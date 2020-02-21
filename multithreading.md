@@ -16,7 +16,8 @@ set scheduler-locking off #other threads will run freely until current thread st
 ## OMP
 Basic OMP APIs
 ```c++
-omp_set_num_threads
+omp_set_num_threads()
+omp_get_thread_num()
 #pragma omp parallel for schedule(dynamic/static, 4)
 for (int i = 0; i < n_jobs; ++i) {
    // each for item is one job 
