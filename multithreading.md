@@ -14,8 +14,9 @@ set scheduler-locking on #other threads will be frozen
 set scheduler-locking off #other threads will run freely until current thread stops again
 ```
 ## OMP
-https://helloacm.com/simple-tutorial-with-openmp-how-to-use-parallel-block-in-cc-using-openmp/
-https://www.openmp.org/wp-content/uploads/omp-hands-on-SC08.pdf
+simpel example: https://helloacm.com/simple-tutorial-with-openmp-how-to-use-parallel-block-in-cc-using-openmp/
+very useful complete pdf: https://www.openmp.org/wp-content/uploads/omp-hands-on-SC08.pdf
+omp single vs omp critical: https://stackoverflow.com/questions/33441767/difference-between-omp-critical-and-omp-single
 
 Basic OMP APIs
 ```c++
