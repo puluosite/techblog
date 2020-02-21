@@ -15,6 +15,8 @@ set scheduler-locking off #other threads will run freely until current thread st
 ```
 ## OMP
 https://helloacm.com/simple-tutorial-with-openmp-how-to-use-parallel-block-in-cc-using-openmp/
+https://www.openmp.org/wp-content/uploads/omp-hands-on-SC08.pdf
+
 Basic OMP APIs
 ```c++
 omp_set_num_threads()
