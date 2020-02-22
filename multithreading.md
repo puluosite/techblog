@@ -24,7 +24,7 @@ Basic OMP APIs
 ```c++
 omp_set_num_threads()
 omp_get_thread_num()
-#pragma omp parallel for schedule(dynamic/static, 4)
+#pragma omp parallel for schedule(dynamic/static, chunk_size)
 for (int i = 0; i < n_jobs; ++i) {
    // each for item is one job 
 }
