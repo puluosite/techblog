@@ -2,6 +2,7 @@
 1. [Templates](#temp)
 2. [GDB functions](#gdb_function)
 3. [GDB address](#gdb_address)
+4. [GDB tricks](#gdb_tricks)
 
 ## <a name="temp"/>C++ Templates
 1. Instantiate template class methods that are not used in the code, *all the following code are written in CXX files*.
@@ -56,3 +57,7 @@ https://sourceware.org/gdb/onlinedocs/gdb/Symbols.html
     info symbol 0x871657a
     list *0x871657a
     ```
+## <a name="gdb_tricks"/>GDB tricks
+### rbreak can break functions by regex, e.g. ^package_name_get.*token&
+### d 10-50, delete breakpoints from 10 to 50
+### x/x ($rbp) print the address of register
