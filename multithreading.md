@@ -15,6 +15,8 @@ set scheduler-locking on #other threads will be frozen
 set scheduler-locking off #other threads will run freely until current thread stops again
 ```
 ## OMP
+include <omp.h, compile with -fopenmp (for pragma in code) and link with -fopenmp (for run_time_libraries linking)
+
 simpel example: https://helloacm.com/simple-tutorial-with-openmp-how-to-use-parallel-block-in-cc-using-openmp/
 
 very useful complete pdf: https://www.openmp.org/wp-content/uploads/omp-hands-on-SC08.pdf
