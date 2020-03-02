@@ -47,6 +47,16 @@ This is the correct way to get the number of threads used by omp
         }
     }
 ```
+```c++
+#pragma omp critical // big overhead
+    {
+      some_general_function() // to be executed atomically
+    }
+#pragma omp atomic // small overhead but limited to pritimive ops
+    {
+      ++some_int // use hardware atomic feature
+    }
+```
 
 ## Debug Tricks
 ### critical section doesn't mean thread safe
