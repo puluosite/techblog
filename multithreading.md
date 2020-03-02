@@ -24,8 +24,9 @@ omp single vs omp critical: https://stackoverflow.com/questions/33441767/differe
 Basic OMP APIs
 ```c++
 omp_set_num_threads() // doesn't gaurantee you will get this much thread, think of set_thread_10000
-omp_get_thread_num() // Note this only returns correct value in the parallel section, outside returns 1
+omp_get_num_threads() // Note this only returns correct value in the parallel section, outside returns 1
 omp_get_thread_num()
+omp_in_parallel() // function run in both serial and parallel region, can use this to differentiate
 #pragma omp parallel for schedule(dynamic/static, chunk_size)
 for (int i = 0; i < n_jobs; ++i) {
    // each for item is one job 
@@ -34,6 +35,17 @@ for (int i = 0; i < n_jobs; ++i) {
 {
     // atomic section
 }
+```
+This is the correct way to get the number of threads used by omp
+```c++
+    int n_thread_after_set = 0;
+#pragma omp parallel 
+    {
+#pragma omp single
+        {
+            n_thread_after_set = omp_get_num_threads();
+        }
+    }
 ```
 
 ## Debug Tricks
