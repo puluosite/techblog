@@ -60,6 +60,48 @@ This is the correct way to get the number of threads used by omp
     }
 ```
 
+omp cluases and directives
+```c++
+default/share/private(local var not init)/firstprivate(init local data from parent)/lastprivate(send last thread local var to parent)
+static int foo = 0;
+#pragma omp threadprivate(int) // now int has a individual copy for each thread
+```
+
+Threadprivate is tricky in compile. For customerized class, we need to do
+```c++
+lass MyStrWrap
+{
+  public:
+    MyStrWrap(const string& str) : _str(str) {}
+    MyStrWrap(const MyStrWrap& other) : _str(other._str) {}
+    string _str;
+};
+
+class B {
+public:
+    static MyStrWrap a;
+    #pragma omp threadprivate(a)
+};
+MyStrWrap B::a("zzzz");
+```
+If we just write:
+```c++
+class A {
+  public:
+    int i;
+    A()
+    {
+        i = 10;
+    };
+};
+
+A a;
+#pragma omp threadprivate(a)
+```
+There will be compile failure 
+"t_step_in.cxx:172:29: error: 'a' declared 'threadprivate' after first use
+ #pragma omp threadprivate(a)"
+
 ## Debug Tricks
 ### critical section doesn't mean thread safe
 `foo()` and `bar()` can both call `non_mt()`, which causes issue
@@ -84,5 +126,10 @@ void bar()
 
 ### stop at the constructor/destructor when you see something crash
 When you find some crashes of an object, you can stop at the constructor/destructor in the critical session. Then luckily, we will see 2 threads calling the same object.
+
+### use
+```c++
+#pragma omp parallel for default(none) // to check if variables are passed as expected
+```
 
 
