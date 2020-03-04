@@ -23,6 +23,8 @@ very useful complete pdf: https://www.openmp.org/wp-content/uploads/omp-hands-on
 
 omp single vs omp critical: https://stackoverflow.com/questions/33441767/difference-between-omp-critical-and-omp-single
 
+Microsoft's doc is much easier to understand: https://docs.microsoft.com/en-us/cpp/parallel/openmp/2-directives?view=vs-2019#242-sections-construct
+
 Basic OMP APIs
 ```c++
 omp_set_num_threads() // doesn't gaurantee you will get this much thread, think of set_thread_10000
