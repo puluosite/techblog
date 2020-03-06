@@ -1,5 +1,6 @@
 # Performance Profiling Tools
 1. [perf](#perf)
+2. [sunstudio](#sunstudio)
 
 ## [perf](http://www.brendangregg.com/perf.html#FlameGraphs)
 We can use perf to attach to a running program and profile the performance. Firstly, the program needs to be compiled with `-g`. Note we can run both debug and release build with perf. Secondly, make sure the perf is using the correct shared library, otherwise, symbols cannot be read correctly. 
@@ -40,3 +41,11 @@ We can also show program performance in real time:
 ```makefile
 perf top -m 64 -p PID -g --call-graph dwarf
 ```
+
+## [sunstudio]
+1.	collect: sunstudio/bin/collect program_foo (need to use the debug build with -g)
+2.	collect -P to attach to a process, -s 20 to profile the multithreading
+3.	wait for collect, it will generate a file: e.g. test.1.er
+4.	analyze: sunstudio/bin/analyzer test.1.er
+5.	Heap Tracing (Memory Allocation) Data –H on
+
