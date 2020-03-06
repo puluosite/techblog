@@ -42,7 +42,7 @@ We can also show program performance in real time:
 perf top -m 64 -p PID -g --call-graph dwarf
 ```
 
-## [sunstudio]
+## sunstudio
 1.	collect: sunstudio/bin/collect program_foo (need to use the debug build with -g)
 2.	collect -P to attach to a process, -s 20 to profile the multithreading
 3.	wait for collect, it will generate a file: e.g. test.1.er
