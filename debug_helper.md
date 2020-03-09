@@ -56,6 +56,7 @@ https://sourceware.org/gdb/onlinedocs/gdb/Symbols.html
     ```makefile
     info symbol 0x871657a
     list *0x871657a
+    info line *0x871657a
     ```
 ## <a name="gdb_tricks"/>GDB tricks
 ### rbreak can break functions by regex, e.g. ^package_name_get.*token&
