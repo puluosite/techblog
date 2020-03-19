@@ -2,6 +2,7 @@
 1. [GDB Commands](#GDB-Commands)
 2. [OMP](#OMP)
 3. [Debug Tricks](#Debug-Tricks)
+4. [Debug Tools](#Debug-Tools)
 
 ## GDB Commands
 Once program is stopped, all threads are stopped. We can use
@@ -134,4 +135,13 @@ When you find some crashes of an object, you can stop at the constructor/destruc
 #pragma omp parallel for default(none) // to check if variables are passed as expected
 ```
 
+## Debug Tools
+
+### helgrind
+valgrind --tool=helgrind 
+### sunstudio(https://docs.oracle.com/cd/E19205-01/820-0619/820-0619.pdf)
+```csh
+collector -s 20 # to profile the multithreading locking
+-P xxx # to attach to a PID
+```
 
