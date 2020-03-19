@@ -130,10 +130,26 @@ void bar()
 ### stop at the constructor/destructor when you see something crash
 When you find some crashes of an object, you can stop at the constructor/destructor in the critical session. Then luckily, we will see 2 threads calling the same object.
 
-### use
+### use OMP default none to test if VAR is passed in by private/shared
 ```c++
 #pragma omp parallel for default(none) // to check if variables are passed as expected
 ```
+
+### static variable can instantiated at any time
+```c++
+static MyClass s_my = 1; 
+void foo()
+{
+   xxxxx
+   #pragma omp parallel for
+   for (size_t i = 0; i < 10; ++i){
+      bar(i, s_my);
+   }
+   yyyy
+
+}
+```
+Note that `s_int` can be initialized before omp_parallel or can be init during omp_parallel. We cannot assume `s_my` ctor will do things before parallel region, and is threadsafe.
 
 ## Debug Tools
 
