@@ -149,7 +149,7 @@ void foo()
 
 }
 ```
-Note that `s_int` can be initialized before omp_parallel or can be init during omp_parallel. We cannot assume `s_my` ctor will do things before parallel region, and is threadsafe.
+Note that `s_my` can be initialized before omp_parallel or can be init during omp_parallel. We cannot assume `s_my` ctor will do things before parallel region, and is threadsafe.
 
 ## Debug Tools
 
