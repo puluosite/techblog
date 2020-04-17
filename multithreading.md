@@ -10,11 +10,25 @@ Once program is stopped, all threads are stopped. We can use
 info thread #view all threads
 thread n #select nth thread 
 ```
+
 When type s/c/n in the current threads, other threads can either run freely or frozen by the following settings
 ```make
 set scheduler-locking on #other threads will be frozen
 set scheduler-locking off #other threads will run freely until current thread stops again
 ```
+
+breakpoint and watchpoint can be set by thread
+```make
+break foo.cxx:121 thread 2
+watch someVar thread 2
+```
+
+By default, when breakpoint is hit, all other threads are stopped, we can toggle this behavior by:
+```make
+set non-stop on
+set non-stop off
+```
+
 ## OMP
 include <omp.h>, compile with -fopenmp (for pragma in code) and link with -fopenmp (for run_time_libraries linking)
 
@@ -150,6 +164,12 @@ void foo()
 }
 ```
 Note that `s_my` can be initialized before omp_parallel or can be init during omp_parallel. We cannot assume `s_my` ctor will do things before parallel region, and is threadsafe.
+
+### finding determinism
+1. associate an Unique ID with everything important, so when something went wrong, we can know exactly which object is failing, and set a breakpoint
+2. ID can be a static unsigned, and increment by 1 for each new instance
+3. add a counter to the API that has issue
+4. print and flush for important message in the critical session
 
 ## Debug Tools
 
