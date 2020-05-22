@@ -4,7 +4,9 @@ Only need to satify:
 1. for x >= m, g(m) >=0, i.e true
 2. for x <=, g(m) < 0, i.e. false
 
-If there is no solution, then `return_value = r`
+If there is no solution, then `return_value == arr.size()`
+
+always remember `l = 0, r = vec.size()`左闭右开
 
 Then code is:
 
