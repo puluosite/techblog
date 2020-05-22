@@ -1,8 +1,8 @@
 # data structure
 1. binary search/lower bound/uppper bound
 2. tries: use map/default_map to store the prefix
-    ```python
-    class TrieNode(object):
+```python
+class TrieNode(object):
     def __init__(self):
         self.is_word = False
         self.children = {}
