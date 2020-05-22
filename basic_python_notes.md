@@ -1,5 +1,5 @@
-1. loop over the list:
- a. for item in l
- b. for idx, item in enumerate(l)
- c. for item in zip(l1, l2)
-2. dividen / vs // (floor)
+# loop over the list
+ 1. for item in l
+ 2. for idx, item in enumerate(l)
+ 3. for item in zip(l1, l2)
+# dividen / vs // (floor)
