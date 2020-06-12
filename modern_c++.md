@@ -11,3 +11,4 @@ void foo(ARG&& val) { make_unique<Y>(new Y(std::forward<ARG>(val))); }
 ```
 
 5. type deduction `ARG &&`, when `ARG` is `T&`, `& &&` is `&`, only when `&& &&` is deduced to `&&`
+6. Don't return `T&&`, it's only return the local reference. Crash! 
