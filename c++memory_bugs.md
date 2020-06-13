@@ -67,6 +67,12 @@ Need to add copy constructor:
 A(const A& a) { _iptr = new int(*(a._iptr); }
 ```
 
+Another interesting thing is that, resize will prefer copy ctor over move ctor. So even if you have:
+```c++
+A(A&& a) { _iptr = a._iptr; a._iptr = NULL; }
+```
+It will still do memory copy.
+
 ## Always Check Asumption Using *Assert*
 
 Do you see problem in the following code? 
