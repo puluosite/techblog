@@ -18,7 +18,7 @@ void foo(ARG&& val) { make_unique<Y>(new Y(std::forward<ARG>(val))); }
 2. dtor   ---> delete resource
 3. copy ctor (const T&)  ---> copy resource
 4. copy assignment (T& operator=(const T&)) ---> copy resource 
-5. move ctor (T&&) nonexcept  ---> transfer resource
+5. move ctor (T&&) **noexcept**  ---> transfer resource, make things working, need noexcept!!
 6. move assignment (T& operator=(T&&)) ---> transfer resource
-7. friend void swap(T& a, T& b) that calls member function swap(T& other) nonexcept
+7. friend void swap(T& a, T& b) that calls member function swap(T& other) **noexcept**, make things working, need noexcept!!
 8. to ask compiler generate: using keyword = default; to disable, using keyword = delete
