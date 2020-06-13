@@ -67,11 +67,14 @@ Need to add copy constructor:
 A(const A& a) { _iptr = new int(*(a._iptr); }
 ```
 
-Another interesting thing is that, resize will prefer copy ctor over move ctor. So even if you have:
+Another interesting thing is that, resize will prefer copy ctor over move ctor if move ctor is not declared as **noexcept**. (https://stackoverflow.com/questions/18085383/c11-rvalue-reference-calling-copy-constructor-too) So even if you have:
 ```c++
 A(A&& a) { _iptr = a._iptr; a._iptr = NULL; }
 ```
-It will still do memory copy.
+It will still do memory copy. You need to have:
+```c++
+A(A&& a) noexcept { _iptr = a._iptr; a._iptr = NULL; }
+```
 
 ## Always Check Asumption Using *Assert*
 
