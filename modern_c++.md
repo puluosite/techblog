@@ -96,5 +96,11 @@ unique_ptr<FILE, FileCloser> uptr(fp);
       return sp;
     }
     ```
+    + weak_ptr to register in the callback. Callback shouldn't be the owner. This is to avoid cycle ownership
+    ```c++
+    void good_fn(const shared_ptr<X>& x) {
+      obj.on_draw([w = weak_ptr<X>(x)]{if (auto xx = w.lock()) xx->extra_work(); })
+    }
+    ```
     
     
