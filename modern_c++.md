@@ -43,3 +43,31 @@ unique_ptr<FILE, FileCloser> uptr(fp);
   operator T* () const && = delete;  // when smart pointer is a rvalue, we shouldn't convert to raw pointer, 
                                      // smartPtr itself needs to catch it
 ```
+6. natual use of
+    + unique_ptr, tree/list structure wo shared references. 
+    + shared_ptr, node based DAG, each node has a vec of shared_ptr other adjacent nodes., tree/list that shared references
+7. smartptr usage in the class:
+    + has-A, data_member, unique_ptr
+    + PIMPL, const unique_ptr (meaning IMPL is constructued as the object is constructed), NOTE the destrcutor is tricky: https://www.fluentcpp.com/2017/09/22/make-pimpl-using-unique_ptr/
+    + dynamic array member: unique_ptr<Data[]> array.
+    + tree with encapsulation:, but the deletion of subtree is tricky, auto destructor will cann children's dtors 
+    recursively, therefore, we need to iteratively collector all subnodes into a vector and then delete them.
+```c++
+  class Tree {
+    struct Node {
+      vector<unique_ptr<Node>> _children;
+      Node* _parent; // parent owns this, so parent must exist
+    };
+    unique_ptr<Node> root;
+  };
+      + double linked list, unique_ptr, 
+      ```c++
+      class LList {
+        struct Node {
+          unique_ptr<Node> _next; // prev owns next
+          Node* _prev; // when this is deleted, means prev is also deleted, therefore, prev is always valid
+        }
+        unique_ptr<Node> head;
+      };
+      ```
+```
