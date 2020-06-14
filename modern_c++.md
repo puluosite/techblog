@@ -61,7 +61,7 @@ unique_ptr<FILE, FileCloser> uptr(fp);
       };
     ```
     
-    + double linked list, unique_ptr, 
+    + double linked list, unique_ptr, List is a special Tree, then same as tree.
     ```c++
     class LList {
       struct Node {
@@ -71,3 +71,30 @@ unique_ptr<FILE, FileCloser> uptr(fp);
       unique_ptr<Node> head;
     };
     ```
+    + Tree with strong ref, shared_ptr and shared_ptr aliasing constructor.
+    ```c++
+    class Tree {
+      struct Node {
+      vector<shared_ptr<Node>> childrens;
+      Node* _parent;
+      Data _d;
+      };
+      shared_ptr<Node> root;
+      shared_ptr<Data> find(/**/) { .. return {spn, &(spn->_d)}} // shared_ptr aliasing constructor
+    };
+    
+    ```
+    + Factory, unique_ptr or shared_ptr
+    + Factory + Cache, shared_ptr + weak_ptr
+    ```c++
+    shared_ptr<widget> make_widget(int id) {
+      static map<int, weak_ptr<widget>> cache;
+      static mutex mu;
+      lock_guard<mutex> g(mu);
+      auto sp = cache[id].lock();
+      if (!sp) cache[id] = (sp = load_widget(id));
+      return sp;
+    }
+    ```
+    
+    
