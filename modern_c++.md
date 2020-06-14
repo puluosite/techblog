@@ -50,8 +50,7 @@ unique_ptr<FILE, FileCloser> uptr(fp);
     + has-A, data_member, unique_ptr
     + PIMPL, const unique_ptr (meaning IMPL is constructued as the object is constructed), NOTE the destrcutor is tricky: https://www.fluentcpp.com/2017/09/22/make-pimpl-using-unique_ptr/
     + dynamic array member: unique_ptr<Data[]> array.
-    + tree with encapsulation:, but the deletion of subtree is tricky, auto destructor will cann children's dtors 
-    recursively, therefore, we need to iteratively collector all subnodes into a vector and then delete them.
+    + tree with encapsulation:, but the deletion of subtree is tricky, auto destructor will cann children's dtors recursively, therefore, we need to iteratively collector all subnodes into a vector and then delete them.
 ```c++
   class Tree {
     struct Node {
@@ -60,7 +59,7 @@ unique_ptr<FILE, FileCloser> uptr(fp);
     };
     unique_ptr<Node> root;
   };
-  ```
+```
       + double linked list, unique_ptr, 
       ```c++
       class LList {
