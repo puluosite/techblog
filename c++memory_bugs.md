@@ -4,6 +4,7 @@
 3. [Always Check Asumption Using *Assert](#Always-Check-Asumption-Using-*Assert)
 4. [Debug the Stack Overflow that will cause Random Function Call](#stackoverflow)
 5. [Compiler Flags](#compiler-flags)
+6. [Smart_ptr](#smart-ptr)
 
 ## <a name="stackoverflow"/>Stack Overflow Causing Function Call Randomly
 Check the following code:
@@ -116,3 +117,9 @@ INCLUDEDIRS = -isystem$(BOOST_INC)
 ```
 
 `Weffc++` will show the above 2 warnings. The `isystem` will suppress warning from the appended libs. 
+
+## Smart_ptr
+```c++
+unique_ptr<A> make_a() { return make_unique<A>(xxx); }
+const A& a = make_a(); // BOOM, temp uniq_ptr is out of scope, and ref to unknown now
+```
