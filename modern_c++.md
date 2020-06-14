@@ -40,5 +40,6 @@ unique_ptr<FILE, FileCloser> uptr(fp);
     (https://www.youtube.com/watch?v=LYeFGiYaOaE)
 ```c++
   operator T* () const & { return this->get(); } // we smart pointer is a lvalue, get the raw pointer whenever needs
-  operator T* () const && = delete;  // when smart pointer is a rvalue, we shouldn't convert to raw pointer, smartPtr itself needs to catch it
+  operator T* () const && = delete;  // when smart pointer is a rvalue, we shouldn't convert to raw pointer, 
+                                     // smartPtr itself needs to catch it
 ```
