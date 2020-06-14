@@ -60,7 +60,7 @@ unique_ptr<FILE, FileCloser> uptr(fp);
     unique_ptr<Node> root;
   };
 ```
-      + double linked list, unique_ptr, 
+   + double linked list, unique_ptr, 
       ```c++
       class LList {
         struct Node {
