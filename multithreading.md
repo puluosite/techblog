@@ -3,6 +3,7 @@
 2. [OMP](#OMP)
 3. [Debug Tricks](#Debug-Tricks)
 4. [Debug Tools](#Debug-Tools)
+5. [Guidelines](#Guidelines)
 
 ## GDB Commands
 Once program is stopped, all threads are stopped. We can use
@@ -181,3 +182,25 @@ collector -s 20 # to profile the multithreading locking
 -P xxx # to attach to a PID
 ```
 
+## Guidelines
+(https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#S-concurrency)
+1. only lock for a small number of time
+```c++
+// bad
+{lock_gaurd<mutex> g(mu);
+int res = foo(); // heavy cal 
+cache_val += res;}
+// good
+int res = foo(); // heavy cal
+{lock_gaurd<mutex> g(mu);
+cache_val += res;}
+```
+2. if a routine has multiple mutex, lock them at the same time to avoid deadlock
+```c++
+unique_lock<mutex> l1(m1, std::defer_lock);
+unique_lock<mutex> l2(m2, std::defer_lock);
+std::lock(l1, l2);
+```
+3. don't call unknown function while holding a lock (cycle in mutex) (https://www.modernescpp.com/index.php/c-core-guidelines-sharing-data-between-threads)
+4. replace `global/static` with `local/thread_local` variables
+5. `wait()` always with a condition because of spurious wake
