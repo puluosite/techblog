@@ -62,6 +62,8 @@ for (size_t i = 0; i < 100; ++i) {
 
 Then we will have a bad memory issue. During insertion, `vec_A` will resize, and copy constructor will called to move existing elements in vec. Then some As' ~_iptr~ are **already freed**!!!!
 
+So if we have `unique_ptr` then there is no issue.
+
 Need to add copy constructor:
 ```c++
 A(const A& a) { _iptr = new int(*(a._iptr); }
@@ -109,7 +111,7 @@ class D : B {
 ```
 Two issues: 1. `_b` is not ininitialized, and there is virtual function but destructor is non-virtual. In GCC, even you have `-Wall`, it doesn't show any warning. Have to have the following:
 ```make
-CFLAGS=-c -Wall -Weffc++ -g -std=c++1y
+CFLAGS=-c -Wall -Wextra -Weffc++ -g -std=c++1y
 INCLUDEDIRS = -isystem$(BOOST_INC)
 ```
 
