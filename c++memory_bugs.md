@@ -121,6 +121,6 @@ INCLUDEDIRS = -isystem$(BOOST_INC)
 ## Smart Pointers
 ```c++
 unique_ptr<A> make_a() { return make_unique<A>(xxx); }
-const A& a = make_a(); // BOOM, temp uniq_ptr is out of scope, and ref to unknown now
+const A& a = *make_a(); // BOOM, temp uniq_ptr is out of scope, and ref to unknown now
 ```
 same issue for shared_ptr, never use a non-smart-ptr to catch the return value. ASAN can catch it. `-fsanitizer-address-use-after-delete`
