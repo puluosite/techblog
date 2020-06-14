@@ -60,6 +60,7 @@ unique_ptr<FILE, FileCloser> uptr(fp);
     };
     unique_ptr<Node> root;
   };
+  ```
       + double linked list, unique_ptr, 
       ```c++
       class LList {
@@ -70,4 +71,3 @@ unique_ptr<FILE, FileCloser> uptr(fp);
         unique_ptr<Node> head;
       };
       ```
-```
