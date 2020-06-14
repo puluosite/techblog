@@ -38,5 +38,7 @@ unique_ptr<FILE, FileCloser> uptr(fp);
 4. use smart pointer related to ownership, otherwise, use raw pointers. i.e. when use raw pointer, no new/delete
 5. In the smart pointer class, we can have the following 2 member functions:
     (https://www.youtube.com/watch?v=LYeFGiYaOaE)
+```c++
   operator T* () const & { return this->get(); } // we smart pointer is a lvalue, get the raw pointer whenever needs
   operator T* () const && = delete;  // when smart pointer is a rvalue, we shouldn't convert to raw pointer, smartPtr itself needs to catch it
+```
