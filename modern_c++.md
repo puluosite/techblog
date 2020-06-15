@@ -82,8 +82,9 @@ unique_ptr<FILE, FileCloser> uptr(fp);
       shared_ptr<Node> root;
       shared_ptr<Data> find(/**/) { .. return {spn, &(spn->_d)}} // shared_ptr aliasing constructor
     };
-    
     ```
+    
+ 7. smart pointer from c++ core guideline:
     + Factory, unique_ptr or shared_ptr
     + Factory + Cache, shared_ptr + weak_ptr
     ```c++
@@ -115,4 +116,14 @@ unique_ptr<FILE, FileCloser> uptr(fp);
     void may_share(const shared_ptr<widget>&); // "might" retain refcount
     void reseat(shared_ptr<widget>&);          // "might" reseat ptr
     ```
+    + **always copy a local shared_ptr when use get() to pass down the call tree when shared_ptr  callee**
+      from R.37: Do not pass a pointer or reference obtained from an aliased smart pointer
+    ```c++
+    void f(int* p) {xxx}
+    shared_ptr<int> gsp = make_shared<int>(1);
+    int main() {
+      f(gsp.get()); // bad, in call tree of f, they can change gsp, because they can change gsp, and gsp.get()'s pointer is invalid
+      auto sp = gsp;
+      f(sp.get()); // good, sp add ref cnt by 1, so gsp cannot be invalidated. i.e. f cannot change sp.
+    }
     
