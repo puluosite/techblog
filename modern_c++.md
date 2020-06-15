@@ -116,8 +116,9 @@ unique_ptr<FILE, FileCloser> uptr(fp);
     void may_share(const shared_ptr<widget>&); // "might" retain refcount
     void reseat(shared_ptr<widget>&);          // "might" reseat ptr
     ```
-    + **always copy a local shared_ptr when use get() to pass down the call tree when shared_ptr  callee**
-      from R.37: Do not pass a pointer or reference obtained from an aliased smart pointer
+    + **always copy a local shared_ptr when use get() to pass down the call tree when shared_ptr callee**
+      from R.37: Do not pass a pointer or reference obtained from an aliased smart pointer/ 
+      i.e. only use smart_ptr that is a local copy.
     ```c++
     void f(int* p) {xxx}
     shared_ptr<int> gsp = make_shared<int>(1);
@@ -126,4 +127,14 @@ unique_ptr<FILE, FileCloser> uptr(fp);
       auto sp = gsp;
       f(sp.get()); // good, sp add ref cnt by 1, so gsp cannot be invalidated. i.e. f cannot change sp.
     }
+    void my_code()
+    {
+    // BAD: passing pointer or reference obtained from a non-local smart pointer
+    //      that could be inadvertently reset somewhere inside f or its callees
+    f(*g_p);
+
+    // BAD: same reason, just passing it as a "this" pointer
+    g_p->func();
+    }
+    ```
     
