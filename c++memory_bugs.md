@@ -5,6 +5,7 @@
 4. [Debug the Stack Overflow that will cause Random Function Call](#stackoverflow)
 5. [Compiler Flags](#compiler-flags)
 6. [Smart Pointers](#smart-pointers)
+7. [Danger of temp objects](#tempobj)
 
 ## <a name="stackoverflow"/>Stack Overflow Causing Function Call Randomly
 Check the following code:
@@ -124,3 +125,25 @@ unique_ptr<A> make_a() { return make_unique<A>(xxx); }
 const A& a = *make_a(); // BOOM, temp uniq_ptr is out of scope, and ref to unknown now
 ```
 same issue for shared_ptr, never use a non-smart-ptr to catch the return value. ASAN can catch it. `-fsanitizer-address-use-after-delete`
+
+## <a name="tempobj"/>Danger of temp object
+```c++
+template<T>
+const T& min(const T& a, const T& b) { return a < b ? a : b; }
+int x - 10, y = 20;
+int a = min(10, 20); // ok
+const int& aa = min(10, 20); // ok
+const int& aaa = min(x+1,y); // BOOM, x+1 is temp object, and we are ref to a temp object out of scope
+```
+another exmaple for map when we pass a default value as function parameter then pass reference back.
+
+**always copy a local shared_ptr when use get() to pass down the call tree when shared_ptr  callee**
+```c++
+void f(int* p) {xxx}
+shared_ptr<int> gsp = make_shared<int>(1);
+int main() {
+  f(gsp.get()); // bad, in call tree of f, they can change gsp, because they can change gsp, and gsp.get()'s pointer is invalid
+  auto sp = gsp;
+  f(sp.get()); // good, sp add ref cnt by 1, so gsp cannot be invalidated. i.e. f cannot change sp.
+}
+```
