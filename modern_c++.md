@@ -102,5 +102,17 @@ unique_ptr<FILE, FileCloser> uptr(fp);
       obj.on_draw([w = weak_ptr<X>(x)]{if (auto xx = w.lock()) xx->extra_work(); })
     }
     ```
-    
+    + `unique_ptr` as function paremeter to represent ownership transfer; `unique_ptr&` to represent reseat ownership, `const unique_ptr&` is something very strange
+    ```c++
+    void sink(unique_ptr<widget>); // takes ownership of the widget
+    void uses(widget*);            // just uses the widget
+    void reseat(unique_ptr<widget>&); // "will" or "might" reseat pointer
+    void thinko(const unique_ptr<widget>&); // usually not what you want
+    ```
+    + `shared_ptr` to express function is part of owner
+    ```c++
+    void share(shared_ptr<widget>);            // share -- "will" retain refcount
+    void may_share(const shared_ptr<widget>&); // "might" retain refcount
+    void reseat(shared_ptr<widget>&);          // "might" reseat ptr
+    ```
     
