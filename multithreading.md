@@ -4,6 +4,7 @@
 3. [Debug Tricks](#Debug-Tricks)
 4. [Debug Tools](#Debug-Tools)
 5. [Guidelines](#Guidelines)
+6. [OMP Issues](#Omp-issues)
 
 ## GDB Commands
 Once program is stopped, all threads are stopped. We can use
@@ -204,3 +205,6 @@ std::lock(l1, l2);
 3. don't call unknown function while holding a lock (cycle in mutex) (https://www.modernescpp.com/index.php/c-core-guidelines-sharing-data-between-threads)
 4. replace `global/static` with `local/thread_local` variables
 5. `wait()` always with a condition because of spurious wake
+
+## OMP issues
+some OMP and fork are not competible in GCC (https://bisqwit.iki.fi/story/howto/openmp/#OpenmpAndFork) (https://github.com/pytorch/pytorch/issues/17199) if compile with clang, we don't have such issue
