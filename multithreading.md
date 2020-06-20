@@ -5,6 +5,7 @@
 4. [Debug Tools](#Debug-Tools)
 5. [Guidelines](#Guidelines)
 6. [OMP Issues](#Omp-issues)
+7. [Basic Structures](#Basic-structures)
 
 ## GDB Commands
 Once program is stopped, all threads are stopped. We can use
@@ -208,3 +209,18 @@ std::lock(l1, l2);
 
 ## OMP issues
 some OMP and fork are not competible in GCC (https://bisqwit.iki.fi/story/howto/openmp/#OpenmpAndFork) (https://github.com/pytorch/pytorch/issues/17199) if compile with clang, we don't have such issue
+
+## Basic Structures
+### double checking locking
+```c++
+atomic<Widget*> Widget::::pinstance {nullptr};
+Widget* Widget::intance() {
+  if (pinstance == nullptr) {
+    lock_guard<mutex> l(mutW);
+    if (pinstance == nullptr)
+      pinstance == new Widget();
+  }
+  return pinstance;
+}
+
+```
