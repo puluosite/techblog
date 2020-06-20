@@ -212,8 +212,9 @@ some OMP and fork are not competible in GCC (https://bisqwit.iki.fi/story/howto/
 
 ## Basic Structures
 ### double checking locking
+**note the atomic<Widget*>** is very important!!! otherwise pinstance cannot be atomically created in the beginning.
 ```c++
-atomic<Widget*> Widget::::pinstance {nullptr};
+atomic<Widget*> Widget::::pinstance {nullptr}; 
 Widget* Widget::intance() {
   if (pinstance == nullptr) {
     lock_guard<mutex> l(mutW);
