@@ -225,3 +225,19 @@ Widget* Widget::intance() {
 }
 
 ```
+A better version
+```c++
+static unique_ptr<Widget>  Widget::instance;
+static std::once_flag Widget::create;
+Widget& Widget::get_instance() {
+  std::call_once(create, [=]{instance = make_unique<Widget>();})
+  return instance;
+}
+```
+Best
+```c++
+widget& widget::get_instance() {
+  static widget instance;
+  return instance;
+}
+```
