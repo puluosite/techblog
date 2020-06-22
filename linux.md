@@ -17,3 +17,8 @@
 5. find.
     + find . -name '*.tmp' -exec rm {} \;
     + find . -name '*.png' -exec convert {} {}.jpg \;
+    
+6. xargs:
+    + xargs echo rm # to echo the command before really executing them
+7. sed:
+    + sed -E 's/^.*cte_to_implement\(\"(.*)\"\);$/\1/' // \1 refers to the 1st () group
