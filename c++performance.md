@@ -33,6 +33,7 @@ perf report -g
 
 And to be fancier, it can show a flamegraph: https://github.com/brendangregg/FlameGraph.
 ```makefie
+  perf script -i perf.data > out.perf
   stackcollapse-perf.pl out.perf > out.folded
   flamegraph.pl out.kern_folded > kernel.svg
 ```
