@@ -6,6 +6,7 @@
 5. [Guidelines](#Guidelines)
 6. [OMP Issues](#Omp-issues)
 7. [Basic Structures](#Basic-structures)
+8. [Atomic and memory order](#atomic-and-memory-order)
 
 ## GDB Commands
 Once program is stopped, all threads are stopped. We can use
@@ -240,4 +241,50 @@ widget& widget::get_instance() {
   static widget instance;
   return instance;
 }
+```
+
+## Atomic and memory order
+https://zhuanlan.zhihu.com/p/31386431
+
+```
+int data;
+std::atomic_bool flag { false };
+
+// Execute in thread A
+void producer() {
+    data = 42;  // (1)
+    flag.store(true);  // (2)
+}
+
+// Execute in thread B
+void consume() {
+    while (!flag.load());  // (3)
+    assert(data == 42);  // (4) ---> assert will trigger
+}
+```
+need to change to:
+``` 
+flag.store(true, std::memory_order_release); // publish
+ while (!flag.load(std::memory_order_acquire));  // receive
+```
+
+spin lock:
+```
+struct spinlock {
+    void lock() {
+        bool expected = false;
+        while (!state.compare_exchange_weak(
+                expected, true, 
+                std::memory_order_release,  // when comp success, publish 
+                std::memory_order_acquire)) { // when comp fail, acquire flag from load, actually, maybe release if ok, since only this is set to true
+            expected = false;
+        }
+    }
+
+    void unlock() {
+        state.store(false, std::memory_order_release);
+    }
+private:
+    std::atomic_bool state;
+};
 ```
