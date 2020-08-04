@@ -288,3 +288,4 @@ private:
     std::atomic_bool state;
 };
 ```
+cppreference version: https://en.cppreference.com/w/cpp/atomic/atomic_flag also uses acquire/release semantic
