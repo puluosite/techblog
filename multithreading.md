@@ -246,7 +246,7 @@ widget& widget::get_instance() {
 ## Atomic and memory order
 https://zhuanlan.zhihu.com/p/31386431
 
-```
+```c++
 int data;
 std::atomic_bool flag { false };
 
@@ -263,13 +263,13 @@ void consume() {
 }
 ```
 need to change to:
-``` 
+``` c++
 flag.store(true, std::memory_order_release); // publish
  while (!flag.load(std::memory_order_acquire));  // receive
 ```
 
 spin lock:
-```
+```c++
 struct spinlock {
     void lock() {
         bool expected = false;
