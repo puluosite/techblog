@@ -253,12 +253,12 @@ std::atomic_bool flag { false };
 // Execute in thread A
 void producer() {
     data = 42;  // (1)
-    flag.store(true);  // (2)
+    flag.store(true, relax);  // (2)
 }
 
 // Execute in thread B
 void consume() {
-    while (!flag.load());  // (3)
+    while (!flag.load(relax));  // (3)
     assert(data == 42);  // (4) ---> assert will trigger
 }
 ```
