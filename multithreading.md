@@ -175,7 +175,19 @@ Note that `s_my` can be initialized before omp_parallel or can be init during om
 3. add a counter to the API that has issue
 4. print and flush for important message in the critical session
 
+
 ## Debug Tools
+
+### have a low lattency MT logger
+https://preshing.com/20120522/lightweight-in-memory-logging/
+
+### TSAN
+List very popular bugs
++ double checking is almost always a bad idea: except https://www.youtube.com/watch?v=c1gO9aB9nbs&feature=youtu.be&t=18m40s
++ bit sharing on a single unsigned
++ race on complex object, i.e. hash_map, need to use read/write lock in c++17 or boost
++ vptr race, **never use aync during ctor/dtor**
+https://github.com/google/sanitizers/wiki/ThreadSanitizerPopularDataRaces
 
 ### helgrind
 valgrind --tool=helgrind 
