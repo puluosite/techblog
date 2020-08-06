@@ -303,3 +303,15 @@ private:
 cppreference version: https://en.cppreference.com/w/cpp/atomic/atomic_flag also uses acquire/release semantic
 release/acquire vs release/consume: https://preshing.com/20140709/the-purpose-of-memory_order_consume-in-cpp11/#:~:text=Both%20consume%20and%20acquire%20serve,where%20consume%20operations%20are%20legal.
 consume uses code based dependency to prevent reordering. Check example in the link.
+
+c++11 way of lazy initialization
+```c++
+static unique_ptr<Widget> Widget::instance;
+static std::once_flag Widget::create;
+
+Widget& Widget::get_instance()
+{
+  std::call_once(create, [=](){instance = make_unique<Widget>(); });
+  return *instance;
+}
+```
