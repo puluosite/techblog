@@ -33,6 +33,11 @@ set non-stop on
 set non-stop off
 ```
 
+Apply a command on all thread:
+```make
+thread apply all bt
+```
+
 ## OMP
 include <omp.h>, compile with -fopenmp (for pragma in code) and link with -fopenmp (for run_time_libraries linking)
 
