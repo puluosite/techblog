@@ -99,7 +99,7 @@ https://eli.thegreenplace.net/2011/11/03/position-independent-code-pic-in-shared
 He also has a blog series of async IO
 https://eli.thegreenplace.net/2017/concurrent-servers-part-1-introduction/
 
-### Using ASAN/TSAN
+### Building with ASAN/TSAN
 Need to add `-fsanitize` for both compiler and linker, `-fsanitize-recover=address` will allow `setenv ASAN_OPTIONS halt-on-error=0` work.
 ```make
 ifeq ($(USE_ASAN),yes)
@@ -138,3 +138,10 @@ malloc/calloc/free
 
 Another interesting thing is in some building system, it will execute binary in Makefile, so if ASAN fails, building system will stop.
 So we will have: `setenv ASAN_OPTIONS detect_leaks=0` during building.
+
+### Running ASAN/TSAN
+Run with the following env in my project:
+```csh
+setenv ASAN_OPTIONS "detect_leaks=0:halt_on_error=0"
+setent TSAN_OPTIONS detect_deadlocks=0
+```
