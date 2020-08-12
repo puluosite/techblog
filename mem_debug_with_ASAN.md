@@ -143,5 +143,5 @@ So we will have: `setenv ASAN_OPTIONS detect_leaks=0` during building.
 Run with the following env in my project:
 ```csh
 setenv ASAN_OPTIONS "detect_leaks=0:halt_on_error=0"
-setent TSAN_OPTIONS detect_deadlocks=0
+setenv TSAN_OPTIONS "detect_deadlocks=0:suppressions=/home/xxx/TSAN_suppress"
 ```
