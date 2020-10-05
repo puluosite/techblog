@@ -22,3 +22,11 @@
     + xargs echo rm # to echo the command before really executing them
 7. sed:
     + sed -E 's/^.*cte_to_implement\(\"(.*)\"\);$/\1/' // \1 refers to the 1st () group
+    
+8. cronjob
+    + create a bash wrapper instead running python directly
+    ```bash
+    #!/bin/csh
+    source /home/xxx/.cshrc
+    python /home/yyy.py
+    ```
