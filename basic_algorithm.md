@@ -93,3 +93,37 @@ vector<int> inorderTraversal(TreeNode* root) {
     }
     
     ```
+    
+    ## Fenwick Tree
+    Handle case when want to query the range sum.
+    [1,2,3,4,5]
+    How to know the range sum from 1->3, we can calculate the prefix sum [1,3,6,10,15], then 1->3 is 6-1 = 5.
+    However, when the array is dynamically changed, we need to update the prefix sum. To update one element, it's O(n)
+    
+    Fenwick Tree is a data structure that does update in O(lgN), and query prefixSum in O(lgN)
+    ```c++
+    class FenwickTree
+    {
+    FenwickTree(int n): _sums(n+1, 0) {}
+    vector<int> _sums;
+    void update(int i, int val) {
+      while(i < _sums.size()) {
+        _sums[i] += val;
+        i += lower_bit(i); // find parent in update tree
+      }
+    }
+    
+    int get_partial_sum(int i) {
+      int sum = 0;
+      while (i != 0) {
+        sum += _sums[i];
+        i -= lower_bit(i); // parent in query tree
+      }
+      return sum;
+    }
+    
+    int lower_bit(int i) { return i&(-i);}
+    
+    };
+    ```
+    
