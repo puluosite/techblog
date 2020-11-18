@@ -10,4 +10,4 @@ make install
 
 We then can copy the head and lib to our project.
 
-Note that
+Note that in the linking flag, we need both: `-ljemalloc` and `-lrt` 
