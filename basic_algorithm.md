@@ -153,4 +153,25 @@ for (int i = 0; i < str.size(); ++i) {
 
 ```
 
+## monotonic queue
+use to find min/max in sliding window with constant time
+
+```c++
+class MonoDecQueue {
+      public:
+        void push(int v) {
+            while (!_q.empty() && v > _q.back()) 
+                _q.pop_back();  
+            _q.push_back(v);
+        }
+        
+        int get_max() const {return _q.front(); }
+        void pop(int v) {
+            if (v == _q.front())
+                _q.pop_front();
+        }
+        deque<int> _q;
+    };
+```
+
     
