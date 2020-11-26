@@ -132,23 +132,29 @@ vector<int> postorderTraversal(TreeNode* root) {
 
 handling of the substring can use the following template
 ```c++
-vector<int> map(128,0);
-// init map
+vector<int> need(128,0), map(128, 0);
+// init need
 int counter = 0;
 for (auto c : sub_str) {
-  map[c]++; // record 
+  need[c]++; // record 
 }
 // iterate string
-int begin = 0;
-for (int i = 0; i < str.size(); ++i) {
-  char cur_c = str[i];
-  if (map[cur_c]-- ?) // some condition, -- for record
-  while (/* counter condition */) {
-    /* do something */
-    // move begin forward
-    map[str[begin]]++; // ++ for un-record
-    begin++;
+int l = 0, r = 0;
+for (; r < str.size(); ++r) {
+
+  // increase window
+  ++map[str[r]];
+  if (map[str[r]] == need[str[r]]) // record, usually ++counter
+  
+  // window fit with any length
+  // if (/* counter condition(/) 
+  
+  // shring window
+  while (/* window condition */) {
+    if (map[str[l]] == need[str[l]]) // pop, usually --counter
+    ++l;
   }
+  // possible window fit with min size
 }
 
 ```
