@@ -180,4 +180,93 @@ class MonoDecQueue {
     };
 ```
 
+
+## combination/permutation/subset/backtrack
+
+```c++
+// Combination C(m, n)
+void backtrace(int start, vector<int>& path, int m, const vector<int>& n)
+{
+  // termination
+  if (path.size() == m) {
+    res.push_back(path);
+    return;
+  }
+  
+  for (int i = start; i < n.size(); ++i) {
+    // select
+    path.push_back(n[i]);
+    backtrack(i+1, path, m, n);
+    // unselect
+    path.pop_back();
+  }
+}
+```
+```c++
+// Permutation P(m, n)
+void backtrace(vector<int>& path, int m, const vector<int>& n)
+{
+  // termination
+  if (path.size() == m) {
+    res.push_back(path);
+    return;
+  }
+  
+  for (int i = 0; i < n.size(); ++i) {
+    if (used[i]) continue;
+    // select
+    used[i] = true;
+    path.push_back(n[i]);
+    backtrack(path, m, n);
+    // unselect
+    path.pop_back();
+    used[i] = false;
+  }
+}
+```
+subset can be treate as:
++ combination of selecting 0, 1, 2, ... n-1, n
+```C++
+for (int i = 0; i <= n.size(); ++i) {
+  comb_backtrack(0, path, i, n);
+}
+```
++ select/not-select items
+```c++
+void backtrack(int start, vector<int>& path, const vector<int>& nums)
+{
+  if (start == nums.size()) {
+      res.push_back(path);
+      return;
+  }
+  // not select
+  backtrack(start+1, path, nums);
+  // select
+  path.push_back(nums[start]);
+  backtrack(start+1, path, nums);
+  path.pop_back();
+}
+```
+
+```c++
+bool backtrack(start, path, )
+{
+  if (/* condition met*/) {
+    record_path(path);
+    return true;
+  }
+  
+  for (auto choice : choices) {
+    if(/*current_choice_invalid*/)
+      continue/break; // depends
+    path.push_back(choice);
+    if (backtrack(start+1, path, ...))
+      // we can terminate early, return true
+    path.pop_back();
+  }
+  return false // to terminate early
+}
+```
+
+
     
