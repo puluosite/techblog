@@ -186,6 +186,9 @@ Note that `s_my` can be initialized before omp_parallel or can be init during om
 ### have a low lattency MT logger
 https://preshing.com/20120522/lightweight-in-memory-logging/
 
+### facebook gdb extention to print deadlock
+https://github.com/facebook/folly/blob/master/folly/experimental/gdb/deadlock.py
+
 ### TSAN
 List very popular bugs
 + double checking is almost always a bad idea: except https://www.youtube.com/watch?v=c1gO9aB9nbs&feature=youtu.be&t=18m40s
