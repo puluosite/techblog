@@ -158,6 +158,14 @@ When you find some crashes of an object, you can stop at the constructor/destruc
 #pragma omp parallel for default(none) // to check if variables are passed as expected
 ```
 
+### run tool again and again until crash in GDB
+```bash
+break _exit
+commands
+run
+end
+```
+
 ### static variable can instantiated at any time
 ```c++
 static MyClass s_my = 1; 
