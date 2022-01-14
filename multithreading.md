@@ -204,6 +204,7 @@ List very popular bugs
 + race on complex object, i.e. hash_map, need to use read/write lock in c++17 or boost
 + vptr race, **never use aync during ctor/dtor**
 https://github.com/google/sanitizers/wiki/ThreadSanitizerPopularDataRaces
++ TSan Popular data races: https://github.com/google/sanitizers/wiki/ThreadSanitizerPopularDataRaces
 
 ### helgrind
 valgrind --tool=helgrind 
