@@ -7,6 +7,7 @@
 6. [OMP Issues](#Omp-issues)
 7. [Basic Structures](#Basic-structures)
 8. [Atomic and memory order](#atomic-and-memory-order)
+9. [Boost asio](#boost-asio)
 
 ## GDB Commands
 Once program is stopped, all threads are stopped. We can use
@@ -332,3 +333,49 @@ Widget& Widget::get_instance()
   return *instance;
 }
 ```
+
+## Boost asio
+we can use boost asio as a thread pool. It's a pub-sub system.
+job_producer --> push to asio --> asio send jobs to each thread
+```c++
+ void* pthread_job(void* args)
+{
+    ThreadPool* thread_pool = (ThreadPool*)args;
+    thread_pool->_io_service.run(); 
+    pthread_exit(NULL);
+}
+
+
+   boost::asio::io_service io_service
+   io_service.post([job]() { job->run();}); // add jobs
+   vector<std::thread> threads;
+   
+   for (int i = 0; i < n_threads; ++i) {
+      threads.emplace_back([&]() { 
+                       io_service.run(); 
+                       });
+   } // when thread start, it will receive job from asio_io
+   
+   // or we can use pthread for more settings
+   // int rc = pthread_create(&_pthreads[i], &_pthread_attr, pthread_job, (void*)this);
+   
+   // we can notify all threads are created
+   flag.store(true, std::memory_order_release); // flag prepared by this thread and release to worker
+
+   // join all the threads
+   for (auto& t : threads) {
+        if (t.joinable()) t.join();
+   }
+
+```
+
+for jobs, if we want to wait until all threads are created, we can do the following
+```c++
+   // blocking and checking in the job compute
+   bool all_threads_created = false;
+   do {
+        all_threads_created = flag.load(std::memory_order_acquire); // flag acquired from diff thread
+   } while (all_threads_created == false); 
+   // now compute
+```
+
