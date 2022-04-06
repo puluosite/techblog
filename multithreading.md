@@ -8,6 +8,7 @@
 7. [Basic Structures](#Basic-structures)
 8. [Atomic and memory order](#atomic-and-memory-order)
 9. [Boost asio](#boost-asio)
+10. [Memory manager](#memory-manager)
 
 ## GDB Commands
 Once program is stopped, all threads are stopped. We can use
@@ -379,3 +380,11 @@ for jobs, if we want to wait until all threads are created, we can do the follow
    // now compute
 ```
 
+## Memory manager
+new/delete object frequently in all threads will create performance issue, if we just use the linux default malloc/free. First thing is to try tc_malloc or jc_malloc. Sometimes, they don't work neither. Ideally, we want to have a pool for each thread for high performance application. And avoid system call. Because system call has lock under the hood.
+
+In addition, for customerized memory manager, we can create pool per thread for better performance. However, it will use more memory.
+
+It's a trade-off. 
+
+However, system default malloc/free is always bad.
