@@ -338,6 +338,7 @@ Widget& Widget::get_instance()
 ## Boost asio
 we can use boost asio as a thread pool. It's a pub-sub system.
 job_producer --> push to asio --> asio send jobs to each thread
+https://youtu.be/rwOv_tw2eA4
 ```c++
  void* pthread_job(void* args)
 {
