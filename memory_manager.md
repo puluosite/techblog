@@ -1,7 +1,7 @@
 # Memory manager
-memory manager can be applied through micro like the following
+memory manager can be applied through micro like the following:
 
-c++```
+```c++
 #define MEM_MGR_DECL(T) \
   public: \
     static void* operator new (size_t t) { return _get_mem_m()->alloc(t); } \
