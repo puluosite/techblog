@@ -17,6 +17,7 @@
 
 ### useful functions
 `globals()` and `locals()` list the map of variables and builtins, etc
+
 function has https://docs.python.org/3/library/inspect.html to check the local variables and other things
 
 
