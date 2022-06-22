@@ -9,3 +9,14 @@
 4. immutable(str,tuple) immutable(list, set, dict(**key in dict is immutable**)) 
 5. function's default parameter is only evaluated once, therefore, **DON'T** use mutable as default parameter
 6. scope LEGB(local, enclosure(non-local), global(global), builtin(\__builtins__))
+
+
+## Relearn python
+
+### variables and data model
+
+### useful functions
+`globals()` and `locals()` list the map of variables and builtins, etc
+function has https://docs.python.org/3/library/inspect.html to check the local variables and other things
+
+
