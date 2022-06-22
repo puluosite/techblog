@@ -32,9 +32,16 @@ print("after create gen func") # will print first
 n.__next__() # now execute, and wait at yield n
 ```
 
+### class hash and eq
+If define `__eq__`, then `__hash__` will gone, you need to implement. And don't use mutable object as hash_key in general
+
+check this: `object.__hash__(self)` in https://docs.python.org/3/reference/datamodel.html
+
 ### useful functions
 `globals()` and `locals()` list the map of variables and builtins, etc
 
 function has https://docs.python.org/3/library/inspect.html to check the local variables and other things
+
+`dir` lists all the attributes of class/instance/object
 
 
