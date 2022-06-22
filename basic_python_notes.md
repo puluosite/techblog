@@ -18,6 +18,20 @@
 
 https://docs.python.org/3/reference/datamodel.html
 
+### generator explain, this is very good
+> A function or method which uses the yield statement (see section The yield statement) is called a generator function. Such a function, when called, always returns an iterator object which can be used to execute the body of the function: calling the iterator’s iterator.__next__() method will cause the function to execute until it provides a value using the yield statement. When the function executes a return statement or falls off the end, a StopIteration exception is raised and the iterator will have reached the end of the set of values to be returned.
+
+```
+def gen_func(num : int):
+    print("###here")
+    for n in range(num):
+        yield n
+       
+n = gen_func(5)
+print("after create gen func") # will print first
+n.__next__() # now execute, and wait at yield n
+```
+
 ### useful functions
 `globals()` and `locals()` list the map of variables and builtins, etc
 
