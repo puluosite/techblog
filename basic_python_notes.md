@@ -44,4 +44,5 @@ function has https://docs.python.org/3/library/inspect.html to check the local v
 
 `dir` lists all the attributes of class/instance/object
 
-
+### mock and testing
+doc: [https://docs.python.org/3/library/unittest.mock-examples.html]
