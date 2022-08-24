@@ -8,4 +8,7 @@ keep track of my tech issues and how to resolve them
       alias tmux="TERM=screen-256color-bce tmux"
   -- #tmux.config
       set -g default-terminal "screen-256color"
-3. in the iterm2, ssh to remote machine with -X, and tmux -CC
+3. in the iterm2, ssh to remote machine with -X, and tmux -CC a
+
+
+
