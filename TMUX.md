@@ -17,4 +17,9 @@ keep track of my tech issues and how to resolve them
 5. Sometimes need to mount remote disk locally
   - sudo sshfs -o follow_symlinks -o allow_other user@remote-host:/home/user ./current_dir
 
+6. Sometimes need to forward local port to the remote port.
+  - add local public key to remote host authorized_keys in .ssh 
+  - ssh -L 10000(local):localhost:13445(remote) user@remote_machine
+  - Now, instead VNC to remote_machine and open localhost:13445, you can go to localhost:10000 on your current machine.
+
 
