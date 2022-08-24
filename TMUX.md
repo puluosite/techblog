@@ -14,5 +14,7 @@ keep track of my tech issues and how to resolve them
   - tmux new-session -d -s session_name
   - tmux -CC a
 
+5. Sometimes need to mount remote disk locally
+  - sudo sshfs -o follow_symlinks -o allow_other user@remote-host:/home/user ./current_dir
 
 
