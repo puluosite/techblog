@@ -1,4 +1,4 @@
-# techblog
+# TMUX
 keep track of my tech issues and how to resolve them
 
 1. setup oh my zsh on mac
